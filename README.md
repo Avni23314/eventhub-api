@@ -32,7 +32,7 @@ A RESTful event management API built using Django and Django REST Framework. Eve
 ### 1. Clone the repository
 
 ```powershell
-git clone https://github.com/Avni23314/eventhub-api
+git clone https://github.com/Avni23314/eventhub-api.git
 cd eventhub-api
 ```
 
@@ -156,14 +156,14 @@ Send a `POST` request to `/api/reservations/`:
 
 ```json
 {
-  "event": 1,
+  "event": 6,
   "attendee_name": "Rahul Sharma",
   "attendee_email": "rahul@example.com",
   "seats_reserved": 2
 }
 ```
 
-Replace `event: 1` with the ID of an existing event that has sufficient available seats.
+Replace `event: 6` with the ID of an existing event that has sufficient available seats.
 
 A successful reservation returns **`201 Created`**. The event's available seat count decreases automatically.
 
@@ -198,7 +198,8 @@ The reservation is rejected, and the event's available seat count remains unchan
 
 ### Cancel a reservation
 
-Send a `POST` request to `/api/reservations/1/cancel/`. No request body is needed.
+Send a `POST` request to `/api/reservations/<reservation_id>/cancel/`. No request body is needed.
+The `<reservation_id>` should be replaced with the actual reservation ID.
 
 A successful cancellation returns the updated reservation with status `cancelled` and restores the reserved seats to the event. Trying to cancel it again returns `400 Bad Request`.
 
@@ -241,9 +242,23 @@ Committed migrations are located in `events/migrations/`.
 
 ## Submission Evidence
 
-1. Successful reservation creation (`201 Created`)
-2. An overbooking attempt rejected (`400 Bad Request`)
-3. Successful reservation cancellation
+The following Postman screenshots demonstrate the API's main workflows and validation behavior.
+
+### 1. Event Creation
+
+![Event Creation](Screenshots/Event_Creation.png)
+
+### 2. Successful Reservation — 201 Created
+
+![Successful Event Reservation](Screenshots/Event_Reservation.png)
+
+### 3. Overbooking Rejected — 400 Bad Request
+
+![Overbooking Validation Error](Screenshots/Event_Overbooking.png)
+
+### 4. Successful Reservation Cancellation
+
+![Reservation Cancellation](Screenshots/Reservation_Cancellation.png)
 
 ## License
 
